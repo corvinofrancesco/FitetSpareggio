@@ -1,4 +1,4 @@
-package fcorvino.it.fite.roundutil;
+package fcorvino.it.fitet.roundutil;
 
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;

@@ -1,7 +1,7 @@
 package fcorvino.it.fitet.input;
 
-import fcorvino.it.fite.roundutil.RoundRanking;
-import fcorvino.it.fite.roundutil.SimpleRank;
+import fcorvino.it.fitet.roundutil.RoundRanking;
+import fcorvino.it.fitet.roundutil.SimpleRank;
 import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;

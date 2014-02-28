@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fcorvino.it.fite.roundutil;
+package fcorvino.it.fitet.roundutil;
 
 import fcorvino.it.fitet.model.SetDifference;
 import fcorvino.it.fitet.model.SimpleMatch;
