@@ -43,4 +43,8 @@ public class SimpleRound {
     public SimpleMatch getMatch(int i) {
         return matchs.get(i);
     }
+
+    public boolean containPlayer(SimplePlayer pl) {
+        return players.contains(pl);
+    }
 }
