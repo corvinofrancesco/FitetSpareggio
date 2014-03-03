@@ -6,6 +6,8 @@ import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.model.SimpleSet;
+import fcorvino.it.fitet.output.OutputMatrix;
+import fcorvino.it.fitet.output.SimplePrinter;
 
 /**
  *
@@ -107,5 +109,9 @@ public class SimpleLoader {
         RoundRanking ranking = new RoundRanking(round);
         ranking.generateRanking();
         printRanking(ranking);
+        System.out.println("Stampo la tabella");
+        SimplePrinter printer = new SimplePrinter();
+        printer.printTable(OutputMatrix.create(round));
+        
     }    
 }
