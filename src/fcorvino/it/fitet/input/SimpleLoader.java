@@ -7,6 +7,7 @@ import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.model.SimpleSet;
 import fcorvino.it.fitet.output.OutputMatrix;
+import fcorvino.it.fitet.output.OutputMatrixBuilder;
 import fcorvino.it.fitet.output.SimplePrinter;
 
 /**
@@ -112,6 +113,12 @@ public class SimpleLoader {
         System.out.println("Stampo la tabella");
         SimplePrinter printer = new SimplePrinter();
         printer.printTable(OutputMatrix.create(round));
+        
+        printer.printTable(
+                OutputMatrixBuilder.tableForMatch(round)
+                .setTableMethod(new OutputMatrixBuilder.DefaultTableMethod())
+                .build()
+                );
         
     }    
 }

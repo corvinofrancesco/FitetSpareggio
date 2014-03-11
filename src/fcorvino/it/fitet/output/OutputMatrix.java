@@ -20,6 +20,7 @@ import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * OutputMatrix 
@@ -27,12 +28,14 @@ import java.util.ArrayList;
  */
 public class OutputMatrix {
     private ArrayList<OutputMatrixElement> matrix;
+    private HashMap<String,ArrayList<String>> totalRows;
 
     private ArrayList<SimplePlayer> players;
 
     public OutputMatrix() {
         matrix = new ArrayList<OutputMatrixElement>();
         players = new ArrayList<SimplePlayer>();
+        totalRows = new HashMap<String, ArrayList<String>>();
     }    
     
     public OutputMatrixElement get(int indexPlayer1, int indexPlayer2){
@@ -54,6 +57,13 @@ public class OutputMatrix {
         }
         return el;
     }
+    
+    public String get(int index, String nameProp){
+        try {
+            return totalRows.get(nameProp).get(index);
+        } catch (Exception e){}
+        return "";
+    }
 
     public boolean add(OutputMatrixElement e) {
         return matrix.add(e);
@@ -61,6 +71,10 @@ public class OutputMatrix {
 
     public boolean add(SimplePlayer e) {
         return players.add(e);
+    }
+
+    public void setGroupPlayers(ArrayList<SimplePlayer> group) {
+        this.players = group;
     }
     
     public SimplePlayer getPlayer(int index){
@@ -87,4 +101,23 @@ public class OutputMatrix {
         return m;
     }
     
+    public static OutputMatrix createForGroup(SimpleRound r, ArrayList<SimplePlayer> group){
+        OutputMatrix m = new OutputMatrix();
+        m.setGroupPlayers(group);
+        for(int i=0; i<r.getNumMatch();i++) {
+            SimpleMatch match = r.getMatch(i);
+            boolean flagPlayers = false;
+            for(SimplePlayer p : group) if ( match.containPlayer(p)) flagPlayers = true;;
+            if(!flagPlayers) continue;
+            int result[] = match.getResult();
+            m.add(
+                new OutputMatrixElement(
+                match.getFirstPlayer(), 
+                match.getSecondPlayer(),
+                result[0] + "-" + result[1]
+                ));
+        }
+        return m;
+    }
+
 }
