@@ -68,6 +68,8 @@ public class OutputMatrixBuilder {
     public static OutputMatrixBuilder tableForMatch(SimpleRound round){
         OutputMatrixBuilder b = new OutputMatrixBuilder();
         b.round = round;
+        b.group = new ArrayList<SimplePlayer>();
+        for(int i=0;i<round.getNumPlayers();i++) b.group.add(round.getPlayer(i));
         return b;
     }
     

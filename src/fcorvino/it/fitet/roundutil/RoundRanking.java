@@ -13,6 +13,7 @@ public class RoundRanking {
     private SimpleRound round;
 
     private ArrayList<SimpleRank> ranks = null;
+    private ArrayList<ArrayList<SimplePlayer>> groups = null;
     
     public RoundRanking(SimpleRound round) {
         this.round = round;
@@ -30,7 +31,7 @@ public class RoundRanking {
         if(ranks==null) initRanks();
         int currPoint = ranks.get(0).getPoint();
         ArrayList<SimplePlayer> currGroup = new ArrayList<SimplePlayer>();
-        ArrayList<ArrayList<SimplePlayer>> groups = new ArrayList<ArrayList<SimplePlayer>>();
+        groups = new ArrayList<ArrayList<SimplePlayer>>();
         for(SimpleRank r : ranks){
             if(currPoint!= r.getPoint()){
                 groups.add(currGroup);
@@ -69,4 +70,9 @@ public class RoundRanking {
         }
         Collections.sort(ranks, new RankingByDifferences());        
     }
+
+    public ArrayList<ArrayList<SimplePlayer>> getGroups() {
+        return groups;
+    }    
+    
 }

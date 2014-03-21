@@ -9,6 +9,7 @@ import fcorvino.it.fitet.model.SimpleSet;
 import fcorvino.it.fitet.output.OutputMatrix;
 import fcorvino.it.fitet.output.OutputMatrixBuilder;
 import fcorvino.it.fitet.output.SimplePrinter;
+import java.util.ArrayList;
 
 /**
  *
@@ -120,5 +121,18 @@ public class SimpleLoader {
                 .build()
                 );
         
+        ArrayList<SimpleRank> ranks = ranking.getRanks();
+        SimpleRank last = ranks.get(ranks.size()-1);
+        
+        ArrayList<SimplePlayer> players = new ArrayList<SimplePlayer>();
+        for(int i =0;i<round.getNumPlayers();i++){
+            if(last.getPlayer().equals(round.getPlayer(i))) continue;
+            players.add(round.getPlayer(i));
+        }
+        printer.printTable(
+                OutputMatrixBuilder.tableForGroup(round, players)
+                .setTableMethod(new OutputMatrixBuilder.DefaultTableMethod())
+                .build()
+                );
     }    
 }
