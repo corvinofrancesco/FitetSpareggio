@@ -16,18 +16,11 @@
 
 package fcorvino.it.fitet.input;
 
-import static fcorvino.it.fitet.input.SimpleLoader.printRanking;
-import static fcorvino.it.fitet.input.SimpleLoader.printResults;
 import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.model.UniqueNamePlayer;
 import fcorvino.it.fitet.roundutil.RoundRanking;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * InputFromTextFile 

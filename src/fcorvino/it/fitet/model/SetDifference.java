@@ -18,6 +18,9 @@ package fcorvino.it.fitet.model;
 
 /**
  * SetDifference 
+ * 
+ * Metodo per ottenere la differenza punti e set tra due giocatori
+ * 
  * @author Francesco Corvino <fcorvino86@gmail.com>
  */
 public class SetDifference {
@@ -27,6 +30,11 @@ public class SetDifference {
     private int[] differenceSet;
     private int[] differencePoint;
 
+    /**
+     * Imposta il risultato e la differenza set.
+     * @param m Partita in considerazione
+     * @param p Giocatore da considerare per primo
+     */
     public SetDifference(SimpleMatch m, SimplePlayer p) {
         if(m.getFirstPlayer().equals(p)){
             this.advPlayer = m.getSecondPlayer();
@@ -38,56 +46,71 @@ public class SetDifference {
         this.differencePoint = m.getResultPointsInSet();
     }
     
+    /**
+     * restituisce il giocatore avversario.
+     * @return 
+     */
     public SimplePlayer getAdvPlayer() {
         return advPlayer;
     }
-
-    public void setAdvPlayer(SimplePlayer advPlayer) {
-        this.advPlayer = advPlayer;
-    }
+//
+//    public void setAdvPlayer(SimplePlayer advPlayer) {
+//        this.advPlayer = advPlayer;
+//    }
 
     public SimpleMatch getMatch() {
         return match;
     }
 
-    public void setMatch(SimpleMatch match) {
-        this.match = match;
-    }
-
+//    public void setMatch(SimpleMatch match) {
+//        this.match = match;
+//    }
+//
     public int[] getPlayerIndex() {
         return playerIndex;
     }
 
-    public void setPlayerIndex(int[] playerIndex) {
-        this.playerIndex = playerIndex;
-    }
-
+//    public void setPlayerIndex(int[] playerIndex) {
+//        this.playerIndex = playerIndex;
+//    }
+//
     public int[] getDifferenceSet() {
         return differenceSet;
     }
-
-    public void setDifferenceSet(int[] differenceSet) {
-        this.differenceSet = differenceSet;
-    }
+//
+//    public void setDifferenceSet(int[] differenceSet) {
+//        this.differenceSet = differenceSet;
+//    }
 
     public int[] getDifferencePoint() {
         return differencePoint;
     }
-
-    public void setDifferencePoint(int[] differencePoint) {
-        this.differencePoint = differencePoint;
-    }
+//
+//    public void setDifferencePoint(int[] differencePoint) {
+//        this.differencePoint = differencePoint;
+//    }
     
+    /**
+     * Inverte i giocatori e i rispettivi risultati.
+     */
     public void invertPlayers(){
         int tmp = playerIndex[0];
         playerIndex[0] = playerIndex[1];
         playerIndex[1] = tmp;
     }
     
+    /**
+     * Restituisce la differenza set tra i due giocatori.
+     * @return int
+     */
     public int getDifferenceSetValue(){
         return differenceSet[playerIndex[0]] - differenceSet[playerIndex[1]];
     }
     
+    /**
+     * Restituisce la differenza punti tra i due giocatori.
+     * @return int
+     */
     public int getDifferencePointValue(){
         return differencePoint[playerIndex[0]] - differencePoint[playerIndex[1]];                 
     }

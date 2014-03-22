@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>3</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>132</x>
+      <y>186</y>
+      <w>105</w>
+      <h>87</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.model::SetDifference
+--
+-advPlayer: SimplePlayer
+-match: SimpleMatch
+-playerIndex = { 0, 1 }: int[]
+-differenceSet: int[]
+-differencePoint: int[]
+--
++SetDifference(SimpleMatch m, SimplePlayer p): ctor
++getAdvPlayer(): SimplePlayer
++getMatch(): SimpleMatch
++getPlayerIndex(): int[]
++getDifferenceSet(): int[]
++getDifferencePoint(): int[]
+--
++invertPlayers(): void
++getDifferenceSetValue(): int
++getDifferencePointValue(): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>294</x>
+      <y>171</y>
+      <w>102</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.model::SimpleMatch
+--
+-firstPlayer: SimplePlayer
+-secondPlayer: SimplePlayer
+-sets: ArrayList&lt;SimpleSet&gt;
+--
++SimpleMatch(int numSet): ctor
++SimpleMatch(): ctor
+--
++getFirstPlayer(): SimplePlayer
++setFirstPlayer(SimplePlayer firstPlayer): void
++getSecondPlayer(): SimplePlayer
++setSecondPlayer(SimplePlayer secondPlayer): void
++getSets(): ArrayList&lt;SimpleSet&gt;
++setSets(ArrayList&lt;SimpleSet&gt; sets): void
++getPointPlayer1(): int
++getPointPlayer(SimplePlayer p): int
++getResultPointsInSet(): int[]
++getResult(): int[]
++containPlayer(SimplePlayer p): boolean
++getDifferenceFor(SimplePlayer p): SetDifference
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>525</x>
+      <y>498</y>
+      <w>147</w>
+      <h>87</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.output::OutputMatrixElement
+--
+-p1: SimplePlayer
+-p2: SimplePlayer
+-result: String
+--
++OutputMatrixElement(): ctor
++OutputMatrixElement(SimplePlayer p1, SimplePlayer p2, String result): ctor
++OutputMatrixElement(SimplePlayer p): ctor
++getP1(): SimplePlayer
++setP1(SimplePlayer p1): void
++getP2(): SimplePlayer
++setP2(SimplePlayer p2): void
++getResult(): String
++setResult(String result): void
++containsPlayer(SimplePlayer p): boolean
++invert(): OutputMatrixElement
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>318</x>
+      <y>498</y>
+      <w>156</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.output::OutputMatrix
+--
+-matrix: ArrayList&lt;OutputMatrixElement&gt;
+-totalRows: HashMap&lt;String, ArrayList&lt;String&gt;&gt;
+-players: ArrayList&lt;SimplePlayer&gt;
+--
++OutputMatrix(): ctor
++get(int indexPlayer1, int indexPlayer2): OutputMatrixElement
++get(int index, String nameProp): String
++add(OutputMatrixElement e): boolean
++add(SimplePlayer e): boolean
++setGroupPlayers(ArrayList&lt;SimplePlayer&gt; group): void
++getPlayer(int index): SimplePlayer
+~size(): int
++create(SimpleRound r): OutputMatrix
++createForGroup(SimpleRound r, ArrayList&lt;SimplePlayer&gt; group): OutputMatrix
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>546</x>
+      <y>393</y>
+      <w>102</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.roundutil::SimpleRank
+--
+-player: SimplePlayer
+-matchs: ArrayList&lt;SimpleMatch&gt;
+-properties: HashMap&lt;String, Object&gt;
+--
++SimpleRank(SimpleRound r, SimplePlayer p): ctor
++getPoint(): int
++getPlayer(): SimplePlayer
++getGroup(): ArrayList&lt;SimplePlayer&gt;
++setGroup(ArrayList&lt;SimplePlayer&gt; group): void
++getDifferenceSet(): int
++getDifferencePoint(): int
++calculateDifferences(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>822</x>
+      <y>243</y>
+      <w>96</w>
+      <h>69</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.input::SimpleLoader
+--
++min_num_players = 4: int
++delta_num_players = 1: int
++names = {...}: String[]
++surnames = {...}: String[]
+--
++populatePlayers(SimpleRound round): void
++populateMatchs(SimpleRound round): void
++setPoint(SimpleMatch match): void
++printResults(SimpleRound round): void
++printRanking(RoundRanking ranking): void
++main(String args[]): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>405</x>
+      <y>285</y>
+      <w>90</w>
+      <h>69</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.model::SimpleRound
+--
+-players: ArrayList&lt;SimplePlayer&gt;
+-matchs: ArrayList&lt;SimpleMatch&gt;
+--
++SimpleRound(): ctor
++addPlayer(SimplePlayer simplePlayer): void
++addMatch(SimpleMatch match): void
++getNumMatch(): int
++getNumPlayers(): int
++getPlayer(int curPl): SimplePlayer
++getMatch(int i): SimpleMatch
++containPlayer(SimplePlayer pl): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>390</x>
+      <y>396</y>
+      <w>102</w>
+      <h>69</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.roundutil::RoundRanking
+--
+-round: SimpleRound
+-ranks = null: ArrayList&lt;SimpleRank&gt;
+-groups = null: ArrayList&lt;ArrayList&lt;SimplePlayer&gt;&gt;
+--
++RoundRanking(SimpleRound round): ctor
++initRanks(): void
++createGrouping(): int
++getRanks(): ArrayList&lt;SimpleRank&gt;
+-getPlayerRank(SimplePlayer p): SimpleRank
++generateRanking(): void
++getGroups(): ArrayList&lt;ArrayList&lt;SimplePlayer&gt;&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>444</x>
+      <y>174</y>
+      <w>99</w>
+      <h>57</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.model::SimplePlayer
+--
+-name: String
+-surname: String
+--
++SimplePlayer(String name, String surname): ctor
++getName(): String
++setName(String name): void
++getSurname(): String
++setSurname(String surname): void
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>309</x>
+      <y>78</y>
+      <w>72</w>
+      <h>57</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.model::SimpleSet
+--
+-pntPlayer1 = 0: int
+-pntPlayer2 = 0: int
+--
++getPntPlayer1(): int
++setPntPlayer1(int pntPlayer1): void
++getPntPlayer2(): int
++setPntPlayer2(int pntPlayer2): void
++isValid(): boolean
++getWinner(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>114</x>
+      <y>498</y>
+      <w>174</w>
+      <h>57</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.output::OutputMatrixBuilder
+--
+-round: SimpleRound
+-group: ArrayList&lt;SimplePlayer&gt;
+-tableMethod = null: TableMethod
+--
+-OutputMatrixBuilder(): ctor
++setTableMethod(TableMethod method): OutputMatrixBuilder
++build(): OutputMatrix
++tableForMatch(SimpleRound round): OutputMatrixBuilder
++tableForGroup(SimpleRound round, ArrayList&lt;SimplePlayer&gt; group): OutputMatrixBuilder
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>816</x>
+      <y>192</y>
+      <w>126</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.input::InputFromTextFile
+--
+-testString = "...": String
+--
++getRound(String roundString): SimpleRound
++main(String args[]): void
+-addPlayers(String[] parts, SimpleRound r): SimplePlayer[]
+-completeMatch(String[] sets, SimplePlayer[] pl): SimpleMatch
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>444</x>
+      <y>111</y>
+      <w>111</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.model::UniqueNamePlayer
+--
+--
++UniqueNamePlayer(String name, String surname): ctor
++getPlayer(String completeName): UniqueNamePlayer
++equals(Object obj): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>357</x>
+      <y>615</y>
+      <w>87</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.output::SimplePrinter
+--
+--
++printRanking(RoundRanking ranking): void
++printResults(SimpleRound round): void
++printTable(OutputMatrix matrix): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>678</x>
+      <y>423</y>
+      <w>93</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.roundutil::RankingByDifferences
+--
+--
++compare(SimpleRank r1, SimpleRank r2): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>678</x>
+      <y>384</y>
+      <w>90</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>fcorvino.it.fitet.roundutil::RankingByPoint
+--
+--
++compare(SimpleRank r1, SimpleRank r2): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>474</x>
+      <y>222</y>
+      <w>32</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+players</panel_attributes>
+    <additional_attributes>9;63;27;9</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>387</x>
+      <y>243</y>
+      <w>68</w>
+      <h>47</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+matchs</panel_attributes>
+    <additional_attributes>63;42;9;9</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>387</x>
+      <y>168</y>
+      <w>62</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+2
+players</panel_attributes>
+    <additional_attributes>57;15;9;15</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>492</x>
+      <y>135</y>
+      <w>14</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>9;39;9;9</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>465</x>
+      <y>501</y>
+      <w>65</w>
+      <h>14</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>9;9;60;9</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>279</x>
+      <y>498</y>
+      <w>44</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;create&gt;&gt;</panel_attributes>
+    <additional_attributes>39;15;9;15</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>378</x>
+      <y>573</y>
+      <w>32</w>
+      <h>47</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>18;9;18;42</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>228</x>
+      <y>186</y>
+      <w>71</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;create&gt;&gt;</panel_attributes>
+    <additional_attributes>9;15;66;15</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>333</x>
+      <y>126</y>
+      <w>14</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>9;45;9;9</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>429</x>
+      <y>345</y>
+      <w>32</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>18;9;18;51</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>483</x>
+      <y>396</y>
+      <w>68</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;create&gt;&gt;</panel_attributes>
+    <additional_attributes>63;15;9;15</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>639</x>
+      <y>384</y>
+      <w>44</w>
+      <h>26</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>39;9;9;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>639</x>
+      <y>402</y>
+      <w>44</w>
+      <h>38</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>39;33;9;9</additional_attributes>
+  </element>
+</diagram>
