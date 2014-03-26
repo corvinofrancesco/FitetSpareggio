@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Girone - $round.name </title>
+        <style type="text/css">
+        .ms-list1-main {
+                border-left: .75pt solid teal;
+                border-right: .75pt solid teal;
+                border-top: 1.5pt solid teal;
+                border-bottom: 1.5pt solid teal;
+                background-color: white;
+        }
+        .ms-list1-tl {
+                font-weight: bold;
+                color: maroon;
+                border-left-style: none;
+                border-right-style: none;
+                border-top-style: none;
+                border-bottom: .75pt solid gray;
+                background-color: silver;
+        }
+        .ms-list1-left {
+                color: black;
+                border-style: none;
+        }
+        .ms-list1-top {
+                font-weight: bold;
+                color: maroon;
+                border-left-style: none;
+                border-right-style: none;
+                border-top-style: none;
+                border-bottom: .75pt solid gray;
+                background-color: silver;
+        }
+        .ms-list1-even {
+                font-weight: normal;
+                color: black;
+                border-style: none;
+                background-color: white;
+        }
+        .ms-list1-odd {
+                font-weight: normal;
+                color: black;
+                border-style: none;
+                background-color: silver;
+        }
+        </style>
+
+    </head>
+    <body>
+        <h1>Girone - $round.name </h1>
+        <p>
+            Tavolo $round.table con $round.numplayers giocatori. Di seguito il tabellone degli incontri.
+        </p>
+        <table class="ms-list1-main" style="width: 100%">
+                <!-- fpstyle: 24,011111100 -->
+                <tr>
+                        <td class="ms-list1-tl">Giocatori</td>
+                        #foreach ( $player in $round.players ) 
+                        <td class="ms-list1-top">$player</td>
+                        #end
+                </tr>
+                <h2>Prospetto Incontri </h2>
+                #set($condition = false)
+                #foreach ( $rank in $round.ranks ) 
+                    #set($condition = !$condition)
+                    #if ($condition) #set($styleRow = "ms-list1-even") 
+                    #else #set($styleRow = "ms-list1-odd")
+                    #end
+                    <tr>
+                        <td class="ms-list1-left">$rank.player</td>
+                        #foreach( $result in $rank.results)
+                        <td class="$styleRow">$result</td>
+                        #end
+                    </tr>
+                #end
+
+        </table>
+
+        <h2>Classifica</h2>
+        <p>
+            #set($position = 1)
+            <ul>
+            #foreach ($rank in $ranking.ranks)
+                <li>$position - ($rank.point pnt) $rank.player </li>
+                #set($position = $position +1)
+            #end
+            </ul>
+            Passano il girone i primi due classificati:
+            <strong>$ranking.ranks.get(0).player</strong> e <strong>$ranking.ranks.get(1).player</strong> <br/>
+            #set($groups = $ranking.ranks.size() - $ranking.groups.size())
+            #if($groups > 0)
+                Nella classifica ci sono degli spareggi eseguiti per differenza:
+                #set($numgroup = 1)
+                <ul>
+                    #foreach($group in $ranking.groups)
+                        #if($group.size()>1)
+                            <li>gruppo $numgroup : [
+                                #foreach($playerg in $group)
+                                    $playerg.Surname 
+                                #end
+                                ]
+                            </li>
+                            #set($numgroup=$numgroup+1)
+                        #end
+                    #end
+                </ul>
+            #else
+                Non ci sono spareggi
+            #end
+        </p>
+
+    </body>
+</html>
