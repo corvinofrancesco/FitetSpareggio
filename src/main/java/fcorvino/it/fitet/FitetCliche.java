@@ -20,6 +20,7 @@ import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellDependent;
 import asg.cliche.ShellFactory;
+import asg.cliche.example.HelloWorld;
 import fcorvino.it.fitet.dto.MatchDTO;
 import fcorvino.it.fitet.dto.PlayerDTO;
 import fcorvino.it.fitet.output.VelocityPrinter;
@@ -53,6 +54,15 @@ public class FitetCliche implements ShellDependent {
             result += i;
         }
         return result;
+    }
+    
+    @Command(name = "round", description = "Avvia la modifica del girone")
+    public String round() throws IOException{
+        System.out.println("Avviata modifica del girone, premere ?l per la lista dei comandi.");
+        ShellFactory.createSubshell(
+                "round", shell, "Modifica del girone.", 
+                new RoundCommands(repository)).commandLoop();        
+        return "Menu home.";        
     }
 
     @Command(description="Aggiunge un incontro al girone")
