@@ -23,12 +23,24 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    
+    <repositories>
+        <repository>
+           <id>sonatype-nexus-snapshots</id>
+           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+    
     <dependencies>
         <dependency>
             <groupId>velocity</groupId>
             <artifactId>velocity</artifactId>
             <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.cliche</groupId>
+            <artifactId>cliche</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
