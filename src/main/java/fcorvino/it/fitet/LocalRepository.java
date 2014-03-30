@@ -23,6 +23,7 @@ import fcorvino.it.fitet.model.SimpleRound;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * LocalRepository 
@@ -31,15 +32,35 @@ import java.util.Comparator;
 public class LocalRepository {
     private ArrayList<PlayerDTO> players;
     private SimpleRound round;
-
+    private HashMap<String, Object> properties;
+    
     public LocalRepository() {
         players = new ArrayList<PlayerDTO>();
         round = new SimpleRound();
+        properties = new HashMap<String, Object>();
     }
     
     public ArrayList<PlayerDTO> getPlayers() {
         return players;
     }
+
+    public SimpleRound getRound() {
+        return round;
+    }    
+
+    public Object get(String key) {
+        return properties.get(key);
+    }
+
+    public Object put(String key, Object value) {
+        return properties.put(key, value);
+    }
+
+    public Object remove(String key) {
+        return properties.remove(key);
+    }
+    
+    
     
     /**
      * Ricerca un giocatore nel repositori
