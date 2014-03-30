@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fcorvino.it.fitet;
+package fcorvino.it.fitet.dto;
 
 import fcorvino.it.fitet.model.SimplePlayer;
 import java.util.ArrayList;
