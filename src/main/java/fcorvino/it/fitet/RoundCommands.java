@@ -16,86 +16,83 @@
 
 package fcorvino.it.fitet;
 
-import fcorvino.it.fitet.input.SimpleLoader;
+import asg.cliche.Command;
+import asg.cliche.Param;
+import fcorvino.it.fitet.dto.RoundDTO;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.output.OutputMatrix;
+import fcorvino.it.fitet.output.VelocityPrinter;
 import fcorvino.it.fitet.roundutil.RoundRanking;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Date;
-import java.util.Properties;
 import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.exception.MethodInvocationException;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.ResourceNotFoundException;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 /**
  *
  * @author Francesco
  */
-public class Console {
-    
-    public static Template loadTemplate(String path){
-        Template template = null;        
-        try {
-           template = Velocity.getTemplate(path);
-        } catch( ResourceNotFoundException rnfe ) {
-           // couldn't find the template
-        } catch( ParseErrorException pee ){
-          // syntax error: problem parsing the template
-        } catch( MethodInvocationException mie ) {
-          // something invoked in the template
-          // threw an exception
-        } catch( Exception e ) {}
-        return template;
+public class RoundCommands {
+    LocalRepository repository = null;
+
+    public RoundCommands(LocalRepository r) {
+        repository = r;
     }
-    
     
     /**
-     * @param args the command line arguments
+     * 
+     * @param fileName
+     * @param titleRound
+     * @param numberTable
+     * @return 
      */
-    public static void main(String[] args) {
-        Properties prop = new Properties();
-        prop.put("file.resource.loader.class", ClasspathResourceLoader.class.getName());
-        // inizializza velocity
-        try {
-            Velocity.init(prop);                     
-        } catch(Exception e){}        
-        VelocityContext context = new VelocityContext();
-        
-        
-        SimpleLoader loader = new SimpleLoader();        
-        SimpleRound round = new SimpleRound();
-        loader.populatePlayers(round);
-        loader.populateMatchs(round);
+    @Command(name = "description",description = "Imposta la descrizione del girone")
+    public String description(
+            @Param(name = "output-file", description = "Nome del file da creare") String fileName,
+            @Param(name = "round", description = "Titolo del girone") String titleRound,
+            @Param(name = "num-table", description = "Numero del tavolo del girone") Integer numberTable
+            ){
+        repository.put("output-file", fileName);
+        repository.put("round-title", titleRound);
+        repository.put("num-table", numberTable);
+        return "Su " + fileName + ".html verranno stampati i risultati";
+    }
+    
+    /**
+     * Comando per stampare su file HTML il girone in memoria
+     * @return Stringa di stato.
+     */
+    @Command(name = "tabellaHTML",description = "Crea file HTML del girone")
+    public String tabellaHTML() {
+        String out = "";
+
+        SimpleRound round = repository.getRound();
         RoundRanking ranking = new RoundRanking(round);
         ranking.generateRanking();
-        OutputMatrix m = OutputMatrix.create(round);
         
-        RoundDTO roundDto = new RoundDTO(round, m);
-        roundDto.setName("test" + new Date());
-        roundDto.setTable("1");
+        RoundDTO roundDto = new RoundDTO(round, OutputMatrix.create(round));
+        String table = (repository.get("num-table")==null)?null:repository.get("num-table").toString();
+        String title = (repository.get("round-title")==null)?null:repository.get("round-title").toString();
+        String file = repository.get("output-file")==null?"index":repository.get("output-file").toString();
+        roundDto.setName(title);
+        roundDto.setTable(table);
         
-        context.put("round", roundDto);
-        context.put("ranking", ranking);
-        
-        Template t = loadTemplate("base-round-template.vm");
-        if(t!=null){
-            System.out.println("Avvio la stampa");
-            StringWriter sw = new StringWriter();
-            try {
-                t.merge( context, sw );
-                FileWriter fw = new FileWriter("index.html");
-                fw.write(sw.toString());
-                fw.close();
-            } catch (IOException e){
-                System.out.println("Eccezione nell'esecuzione: " + e.getMessage());
-            }
-        }    
-        System.out.println("Processo terminato");
+        VelocityPrinter p = VelocityPrinter.getPrinter();
+        p.getContext().put("round", roundDto);
+        p.getContext().put("ranking", ranking);
+        Template t = p.loadTemplate("base-round-template.vm");
+        if(t==null) return "Template non valido";
+        System.out.println("Avvio la stampa");            
+        try {
+            FileWriter fw = new FileWriter(file + ".html");
+            fw.write(p.printToString(t));
+            fw.close();
+        } catch (IOException e){
+            System.out.println("Eccezione nell'esecuzione: " + e.getMessage());
+        }
+        out += "Processo terminato";
+        return out;
     }
+    
+    
 }
