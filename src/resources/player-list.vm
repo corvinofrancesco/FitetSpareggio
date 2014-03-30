@@ -1,0 +1,9 @@
+Codice | Nome e Cognome
+------------------------------------------
+#foreach($p in $players)
+$p.id  | $p.name $p.surname 
+#end
+------------------------------------------
+Per registrare un giocatore scrivere "p" 
+seguito dal nome e cognome
+------------------------------------------

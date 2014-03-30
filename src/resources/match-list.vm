@@ -1,0 +1,7 @@
+Giocatore 1        | Giocatore 2           | Risultati
+-------------------------------------------------------------
+#foreach($m in $matchs)
+$m.firstPlayer | $m.secondPlayer | $m.results
+#end
+-------------------------------------------------------------
+Per registrare un nuovo incontro  scrivere "m" segui
