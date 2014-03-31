@@ -129,7 +129,7 @@
     <panel_attributes>fcorvino.it.fitet.roundutil::SimpleRank
 --
 -player: SimplePlayer
--matchs: ArrayList&lt;SimpleMatch&gt;
+-matches: ArrayList&lt;SimpleMatch&gt;
 -properties: HashMap&lt;String, Object&gt;
 --
 +SimpleRank(SimpleRound r, SimplePlayer p): ctor
@@ -160,7 +160,7 @@
 +surnames = {...}: String[]
 --
 +populatePlayers(SimpleRound round): void
-+populateMatchs(SimpleRound round): void
++populateMatches(SimpleRound round): void
 +setPoint(SimpleMatch match): void
 +printResults(SimpleRound round): void
 +printRanking(RoundRanking ranking): void
@@ -180,7 +180,7 @@
     <panel_attributes>fcorvino.it.fitet.model::SimpleRound
 --
 -players: ArrayList&lt;SimplePlayer&gt;
--matchs: ArrayList&lt;SimpleMatch&gt;
+-matches: ArrayList&lt;SimpleMatch&gt;
 --
 +SimpleRound(): ctor
 +addPlayer(SimplePlayer simplePlayer): void
@@ -397,7 +397,7 @@ players</panel_attributes>
       <h>47</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
-matchs</panel_attributes>
+matches</panel_attributes>
     <additional_attributes>63;42;9;9</additional_attributes>
   </element>
   <element>

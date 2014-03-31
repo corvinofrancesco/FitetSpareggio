@@ -24,11 +24,11 @@ import java.util.ArrayList;
  */
 public class SimpleRound {
     private ArrayList<SimplePlayer> players;
-    private ArrayList<SimpleMatch> matchs;
+    private ArrayList<SimpleMatch> matches;
 
     public SimpleRound() {
         players = new ArrayList<SimplePlayer>();
-        matchs = new ArrayList<SimpleMatch>();
+        matches = new ArrayList<SimpleMatch>();
     }
     
     public void addPlayer(SimplePlayer simplePlayer) {
@@ -36,10 +36,10 @@ public class SimpleRound {
     }
     
     public void addMatch(SimpleMatch match){
-        matchs.add(match);
+        matches.add(match);
     }
 
-    public int getNumMatch() {
+    public int getNumMatches() {
         int numPlayers = players.size();
         return (int) (numPlayers * (numPlayers - 1) * 0.5);
     }
@@ -53,7 +53,7 @@ public class SimpleRound {
     }
 
     public SimpleMatch getMatch(int i) {
-        return matchs.get(i);
+        return matches.get(i);
     }
 
     public boolean containPlayer(SimplePlayer pl) {

@@ -96,7 +96,7 @@ public class LocalRepository {
     public MatchDTO findMatch(String player1, String player2){
         PlayerDTO p1 = findPlayer(player1);
         PlayerDTO p2 = findPlayer(player2);
-        int size_match = round.getNumMatch();
+        int size_match = round.getNumMatches();
         for(int i =0;i<size_match;i++){
             SimpleMatch m = round.getMatch(i);
             if(m.getFirstPlayer().equals(p1) || m.getSecondPlayer().equals(p1))

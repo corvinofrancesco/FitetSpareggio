@@ -40,7 +40,7 @@ public class SimplePrinter {
     }     
     
     public void printResults(SimpleRound round){
-        for(int i=0; i<round.getNumMatch(); i++){
+        for(int i=0; i<round.getNumMatches(); i++){
             SimpleMatch m = round.getMatch(i);
             int result[] = m.getResult();
             System.out.print(m.getFirstPlayer() + " - " + m.getSecondPlayer() + "-->" + result[0] +  "-" + result[1] + " {");

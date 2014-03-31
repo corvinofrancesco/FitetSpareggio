@@ -19,13 +19,14 @@ package fcorvino.it.fitet;
 import asg.cliche.Command;
 import asg.cliche.Param;
 import fcorvino.it.fitet.dto.RoundDTO;
+import fcorvino.it.fitet.input.SimpleLoader;
+import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.output.OutputMatrix;
 import fcorvino.it.fitet.output.VelocityPrinter;
 import fcorvino.it.fitet.roundutil.RoundRanking;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 import org.apache.velocity.Template;
 
 /**
@@ -37,6 +38,30 @@ public class RoundCommands {
 
     public RoundCommands(LocalRepository r) {
         repository = r;
+    }
+    
+    @Command(name = "simulation", description ="Inserisce dei dati simulati con i giocatori registrati, attenzione sovrascrive i dati inserti.")
+    public String simulation(){
+        if(repository.getRound().getNumPlayers()<2)
+             return "Non ci sono sufficenti giocatori per simulare un girone.";
+        for(SimplePlayer p : repository.getPlayers()) repository.getRound().addPlayer(p);
+        SimpleLoader loader = new SimpleLoader();
+        loader.populateMatches(repository.getRound());
+        return "Girone simulato con i giocatori registrati.";
+    }
+    
+    @Command(name = "simulation", description ="Inserisce dei dati simulati, attenzione sovrascrive i dati inserti.")
+    public String simulation(
+            @Param(name = "numero giocatori", description = "Numero di giocatori da inserire") Integer num_players
+            ){
+        SimpleLoader loader = new SimpleLoader();
+        if(num_players > 1 ) {
+            loader.delta_num_players = 1;
+            loader.min_num_players = num_players;
+            loader.populatePlayers(repository.getRound());
+        } else return "Non ci sono sufficenti giocatori per simulare un girone.";
+
+        return "";
     }
     
     /**
@@ -94,5 +119,7 @@ public class RoundCommands {
         return out;
     }
     
-    
+    public void matchList(){
+        
+    }
 }

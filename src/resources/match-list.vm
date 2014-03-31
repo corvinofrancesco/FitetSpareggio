@@ -1,6 +1,6 @@
 Giocatore 1        | Giocatore 2           | Risultati
 -------------------------------------------------------------
-#foreach($m in $matchs)
+#foreach($m in $matches)
 $m.firstPlayer | $m.secondPlayer | $m.results
 #end
 -------------------------------------------------------------

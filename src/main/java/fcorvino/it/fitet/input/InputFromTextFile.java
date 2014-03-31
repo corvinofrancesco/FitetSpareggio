@@ -42,9 +42,9 @@ public class InputFromTextFile {
     
     public SimpleRound getRound(String roundString){
         SimpleRound r = new SimpleRound();
-        String[] matchs = roundString.split("\n");
-        for(int i =0;i<matchs.length; i++){
-            String parts[] = matchs[i].split("\t");
+        String[] matches = roundString.split("\n");
+        for(int i =0;i<matches.length; i++){
+            String parts[] = matches[i].split("\t");
             SimplePlayer[] pl = addPlayers(parts, r);
             String sets[] = parts[3].split(",");
             SimpleMatch m = completeMatch(sets, pl);
@@ -61,7 +61,7 @@ public class InputFromTextFile {
         //input.pathInput = "out-ex-gir7a";
         System.out.println(UniqueNamePlayer.getPlayer("Corvino Francesco"));
         SimpleRound r = input.getRound(testString);
-        System.out.println("Termino: " + r.getNumMatch() + " players: " + r.getNumPlayers());
+        System.out.println("Termino: " + r.getNumMatches() + " players: " + r.getNumPlayers());
         SimpleLoader.printResults(r);
         RoundRanking ranking = new RoundRanking(r);
         ranking.generateRanking();

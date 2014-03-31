@@ -29,23 +29,23 @@ import java.util.HashMap;
  */
 public class SimpleRank {
     private SimplePlayer player;
-    private ArrayList<SimpleMatch> matchs;
+    private ArrayList<SimpleMatch> matches;
     private HashMap<String, Object> properties;
     
     public SimpleRank(SimpleRound r, SimplePlayer p) {
         this.player = p;
-        this.matchs = new ArrayList<SimpleMatch>();
+        this.matches = new ArrayList<SimpleMatch>();
         this.properties = new HashMap<String, Object>();
-        for(int i =0; i<r.getNumMatch(); i++){
+        for(int i =0; i<r.getNumMatches(); i++){
             if(r.getMatch(i).containPlayer(p)){
-                matchs.add(r.getMatch(i));
+                matches.add(r.getMatch(i));
             }
         }
     }
     
     public int getPoint(){
         int point =0;
-        for(SimpleMatch m : matchs){
+        for(SimpleMatch m : matches){
             point += m.getPointPlayer(player);
         }
         return point;
@@ -75,7 +75,7 @@ public class SimpleRank {
         ArrayList<SimplePlayer> group = (ArrayList<SimplePlayer>) properties.get("group");
         ArrayList<SetDifference> diffs = new ArrayList<SetDifference>();
         int totWinnerSet = 0, totWinnerPoint = 0;
-        for(SimpleMatch m : matchs){
+        for(SimpleMatch m : matches){
             SetDifference dif = m.getDifferenceFor(player);
             if(!group.contains(dif.getAdvPlayer())) continue;
             diffs.add(dif);

@@ -51,7 +51,7 @@ public class OutputMatrixBuilder {
         // inizializzare i players
         m.setGroupPlayers(group);
         // seleziona i match
-        for(int i=0; i<round.getNumMatch();i++) {
+        for(int i=0; i<round.getNumMatches();i++) {
             SimpleMatch match = round.getMatch(i);
             if(!tableMethod.validMatch(match)) continue;
             String result = tableMethod.calculateResult(match);

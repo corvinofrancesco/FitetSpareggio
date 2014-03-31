@@ -60,9 +60,9 @@ public class SimpleLoader {
         }
     }            
 
-    public void populateMatchs(SimpleRound round) {
+    public void populateMatches(SimpleRound round) {
         int curPl = 0, avvPl = 1;
-        for(int i=0; i<round.getNumMatch(); i++){
+        for(int i=0; i<round.getNumMatches(); i++){
             SimpleMatch match = new SimpleMatch(5);
             setPoint(match); 
             if(avvPl==round.getNumPlayers()){
@@ -99,7 +99,7 @@ public class SimpleLoader {
     }
 
     public static void printResults(SimpleRound round){
-        for(int i=0; i<round.getNumMatch(); i++){
+        for(int i=0; i<round.getNumMatches(); i++){
             SimpleMatch m = round.getMatch(i);
             int result[] = m.getResult();
             System.out.print(m.getFirstPlayer() + " - " + m.getSecondPlayer() + "-->" + result[0] +  "-" + result[1] + " {");
@@ -122,7 +122,7 @@ public class SimpleLoader {
         
         SimpleRound round = new SimpleRound();
         loader.populatePlayers(round);
-        loader.populateMatchs(round);
+        loader.populateMatches(round);
         printResults(round);
         RoundRanking ranking = new RoundRanking(round);
         ranking.generateRanking();

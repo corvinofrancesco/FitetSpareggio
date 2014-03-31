@@ -88,7 +88,7 @@ public class OutputMatrix {
     public static OutputMatrix create(SimpleRound r){
         OutputMatrix m = new OutputMatrix();
         for(int i =0; i< r.getNumPlayers();i++) m.add(r.getPlayer(i));
-        for(int i=0; i<r.getNumMatch();i++) {
+        for(int i=0; i<r.getNumMatches();i++) {
             SimpleMatch match = r.getMatch(i);
             int result[] = match.getResult();
             m.add(
@@ -104,7 +104,7 @@ public class OutputMatrix {
     public static OutputMatrix createForGroup(SimpleRound r, ArrayList<SimplePlayer> group){
         OutputMatrix m = new OutputMatrix();
         m.setGroupPlayers(group);
-        for(int i=0; i<r.getNumMatch();i++) {
+        for(int i=0; i<r.getNumMatches();i++) {
             SimpleMatch match = r.getMatch(i);
             boolean flagPlayers = false;
             for(SimplePlayer p : group) if ( match.containPlayer(p)) flagPlayers = true;;
