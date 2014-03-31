@@ -20,7 +20,6 @@ import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellDependent;
 import asg.cliche.ShellFactory;
-import asg.cliche.example.HelloWorld;
 import fcorvino.it.fitet.dto.MatchDTO;
 import fcorvino.it.fitet.dto.PlayerDTO;
 import fcorvino.it.fitet.output.VelocityPrinter;

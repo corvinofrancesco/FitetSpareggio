@@ -26,7 +26,7 @@
     
     <repositories>
         <repository>
-           <id>sonatype-nexus-snapshots</id>
+           <id>sonatype-snapshots</id>
            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
     </repositories>

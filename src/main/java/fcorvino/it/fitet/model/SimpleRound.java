@@ -59,4 +59,8 @@ public class SimpleRound {
     public boolean containPlayer(SimplePlayer pl) {
         return players.contains(pl);
     }
+
+    public ArrayList<SimpleMatch> getMatches() {
+        return matches;
+    }
 }

@@ -1,7 +1,15 @@
-Giocatore 1        | Giocatore 2           | Risultati
--------------------------------------------------------------
+Descrizione
+Numero di incontri: $matches.size() / $round.numMatches;
+Numero di giocatori: $round.numPlayers
+Giocatore 1         | Giocatore 2           | Risultato             |   Parziali
+-------------------------------------------------------------------------------------------
 #foreach($m in $matches)
-$m.firstPlayer | $m.secondPlayer | $m.results
+$m.firstPlayer      | $m.secondPlayer       | ${m.resultsFinal}     |   ${m.resultsPartial} 
 #end
--------------------------------------------------------------
-Per registrare un nuovo incontro  scrivere "m" segui
+-------------------------------------------------------------------------------------------
+Per registrare un nuovo incontro o modificare uno esistene scrivere:
+        m [A] [b] a1-b1 a2-b2 a3-b3 .... 
+[A]     codice del primo giocatore
+[B]     codice del secondo giocatore
+a1 a2 ... an    punteggio set del giocatore [A]
+b1 b2 ... bn    punteggio set del giocatore [B]

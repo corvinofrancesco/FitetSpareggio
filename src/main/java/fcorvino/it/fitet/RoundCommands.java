@@ -18,8 +18,10 @@ package fcorvino.it.fitet;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
+import fcorvino.it.fitet.dto.MatchDTO;
 import fcorvino.it.fitet.dto.RoundDTO;
 import fcorvino.it.fitet.input.SimpleLoader;
+import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.output.OutputMatrix;
@@ -27,6 +29,7 @@ import fcorvino.it.fitet.output.VelocityPrinter;
 import fcorvino.it.fitet.roundutil.RoundRanking;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.apache.velocity.Template;
 
 /**
@@ -60,7 +63,7 @@ public class RoundCommands {
             loader.min_num_players = num_players;
             loader.populatePlayers(repository.getRound());
         } else return "Non ci sono sufficenti giocatori per simulare un girone.";
-
+        loader.populateMatches(repository.getRound());
         return "";
     }
     
@@ -119,7 +122,19 @@ public class RoundCommands {
         return out;
     }
     
-    public void matchList(){
-        
+    @Command(name = "matchesList",description = "Elenco dei match nel girone", abbrev = "ml")
+    public String matchesList(){
+        if(repository.getRound().getMatches().size()==0) 
+            return "Nessun incontro registrato!";
+        VelocityPrinter v = VelocityPrinter.getPrinter();
+        Template t = v.loadTemplate("match-list.vm");
+        ArrayList<MatchDTO> matches = new ArrayList<MatchDTO>();
+        for(SimpleMatch m : repository.getRound().getMatches()){
+            matches.add(new MatchDTO(m));
+        }
+        v.getContext().put("round", repository.getRound());
+        v.getContext().put("matches", matches);
+        //v.getContext().put("matches", repository.getRound().getMatches());
+        return v.printToString(t);        
     }
 }

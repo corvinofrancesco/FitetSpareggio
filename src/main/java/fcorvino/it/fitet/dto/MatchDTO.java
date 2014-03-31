@@ -54,4 +54,17 @@ public class MatchDTO extends SimpleMatch {
         }
         return results;
     }
+    
+    public String getResultsPartial(){
+        String results = "";
+        for(SimpleSet s : this.getSets()){
+            if(s.isValid()) results +=  " " + s.getPntPlayer1() + "-" + s.getPntPlayer2();
+        }
+        return results;        
+    }
+    
+    public String getResultsFinal(){
+        String results = getResult()[0] + "-" + getResult()[1];
+        return results;        
+    }
 }
