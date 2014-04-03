@@ -1,0 +1,26 @@
+-----------------------------------------------------------------------------
+ * Copyright 2014 Francesco Corvino <fcorvino86@gmail.com>.                 *
+ * Licensed under the Apache License, Version 2.0 (the "License");          *
+ *      http://www.apache.org/licenses/LICENSE-2.0                          *
+-----------------------------------------------------------------------------
+Di seguito la lista dei giocatori:
+
+Codice | Nome e Cognome
+------------------------------------------
+#foreach($p in $players)
+$p.id  | $p.name $p.surname 
+#end
+#if($players.size()<1) Nessun giocatore è stato inserito 
+#end
+------------------------------------------
+
+Elenco dei match registrati:
+
+Giocatore 1         | Giocatore 2           | Risultato             |   Parziali
+-------------------------------------------------------------------------------------------
+#foreach($m in $round.matches)
+$m.firstPlayer      | $m.secondPlayer       | ${m.resultsFinal}     |   ${m.resultsPartial} 
+#end
+#if($matches.size()<1) Nessun incontro è stato registrato 
+#end
+-------------------------------------------------------------------------------------------
