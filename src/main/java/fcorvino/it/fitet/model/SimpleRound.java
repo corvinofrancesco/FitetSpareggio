@@ -36,6 +36,9 @@ public class SimpleRound {
     }
     
     public void addMatch(SimpleMatch match){
+        if(matches.contains(match)){
+            matches.remove(match);
+        }
         matches.add(match);
     }
 

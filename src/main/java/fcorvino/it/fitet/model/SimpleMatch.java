@@ -126,4 +126,28 @@ public class SimpleMatch {
         SetDifference diff = new SetDifference(this, p);
         return diff;
     }
+
+    /**
+     * Metodo equals valido solo per incontri nello stesso girone
+     * controlla solo se i due giocatori sono gli stessi
+     * @param obj
+     * @return 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof SimpleMatch){
+            SimpleMatch s = (SimpleMatch) obj;
+            if(s.containPlayer(firstPlayer) && s.containPlayer(secondPlayer)) return true;
+        }
+        return super.equals(obj); //To change body of generated methods, choose Tools | Templates.
+    }    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + (this.firstPlayer != null ? this.firstPlayer.hashCode() : 0);
+        hash = 17 * hash + (this.secondPlayer != null ? this.secondPlayer.hashCode() : 0);
+        return hash;
+    }    
+    
 }

@@ -19,17 +19,18 @@ package fcorvino.it.fitet;
 import asg.cliche.Command;
 import asg.cliche.Param;
 import fcorvino.it.fitet.dto.MatchDTO;
+import fcorvino.it.fitet.dto.PlayerDTO;
 import fcorvino.it.fitet.dto.RoundDTO;
-import fcorvino.it.fitet.input.SimpleLoader;
 import fcorvino.it.fitet.model.SimpleMatch;
-import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.output.OutputMatrix;
 import fcorvino.it.fitet.output.VelocityPrinter;
 import fcorvino.it.fitet.roundutil.RoundRanking;
+import fcorvino.it.fitet.util.Common;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.apache.velocity.Template;
 
 /**
@@ -43,30 +44,6 @@ public class RoundCommands {
         repository = r;
     }
     
-    @Command(name = "simulation", description ="Inserisce dei dati simulati con i giocatori registrati, attenzione sovrascrive i dati inserti.")
-    public String simulation(){
-        if(repository.getRound().getNumPlayers()<2)
-             return "Non ci sono sufficenti giocatori per simulare un girone.";
-        for(SimplePlayer p : repository.getPlayers()) repository.getRound().addPlayer(p);
-        SimpleLoader loader = new SimpleLoader();
-        loader.populateMatches(repository.getRound());
-        return "Girone simulato con i giocatori registrati.";
-    }
-    
-    @Command(name = "simulation", description ="Inserisce dei dati simulati, attenzione sovrascrive i dati inserti.")
-    public String simulation(
-            @Param(name = "numero giocatori", description = "Numero di giocatori da inserire") Integer num_players
-            ){
-        SimpleLoader loader = new SimpleLoader();
-        if(num_players > 1 ) {
-            loader.delta_num_players = 1;
-            loader.min_num_players = num_players;
-            loader.populatePlayers(repository.getRound());
-        } else return "Non ci sono sufficenti giocatori per simulare un girone.";
-        loader.populateMatches(repository.getRound());
-        return "";
-    }
-    
     /**
      * 
      * @param fileName
@@ -74,15 +51,15 @@ public class RoundCommands {
      * @param numberTable
      * @return 
      */
-    @Command(name = "description",description = "Imposta la descrizione del girone")
+    @Command(name = "description",description = "Imposta la descrizione del girone", abbrev = "d")
     public String description(
             @Param(name = "output-file", description = "Nome del file da creare") String fileName,
             @Param(name = "round", description = "Titolo del girone") String titleRound,
             @Param(name = "num-table", description = "Numero del tavolo del girone") Integer numberTable
             ){
-        repository.put("output-file", fileName);
-        repository.put("round-title", titleRound);
-        repository.put("num-table", numberTable);
+        repository.put(Common.KEY_OUTPUT_FILE, fileName);
+        repository.put(Common.KEY_TITLE_ROUND, titleRound);
+        repository.put(Common.KEY_TABLE_NUMBER, numberTable);
         return "Su " + fileName + ".html verranno stampati i risultati";
     }
     
@@ -90,7 +67,7 @@ public class RoundCommands {
      * Comando per stampare su file HTML il girone in memoria
      * @return Stringa di stato.
      */
-    @Command(name = "tabellaHTML",description = "Crea file HTML del girone")
+    @Command(name = "tabellaHTML",description = "Crea file HTML del girone", abbrev = "t")
     public String tabellaHTML() {
         String out = "";
 
@@ -99,9 +76,9 @@ public class RoundCommands {
         ranking.generateRanking();
         
         RoundDTO roundDto = new RoundDTO(round, OutputMatrix.create(round));
-        String table = (repository.get("num-table")==null)?null:repository.get("num-table").toString();
-        String title = (repository.get("round-title")==null)?null:repository.get("round-title").toString();
-        String file = repository.get("output-file")==null?"index":repository.get("output-file").toString();
+        String table = (repository.get("num-table")==null)?null:repository.get(Common.KEY_TABLE_NUMBER).toString();
+        String title = (repository.get("round-title")==null)?null:repository.get(Common.KEY_TITLE_ROUND).toString();
+        String file = repository.get("output-file")==null?"index":repository.get(Common.KEY_OUTPUT_FILE).toString();
         roundDto.setName(title);
         roundDto.setTable(table);
         
@@ -137,4 +114,22 @@ public class RoundCommands {
         //v.getContext().put("matches", repository.getRound().getMatches());
         return v.printToString(t);        
     }
+    
+
+    @Command(name = "match", description="Aggiunge un incontro al girone", abbrev = "m")
+    public String match(
+            @Param(name="player1", description="Codice del primo giocatore") String player1, 
+            @Param(name="player2", description="Codice del secondo giocatore") String player2, 
+            @Param(name="risultati", description="Elenco dei risultati, esempio: 1-11 3-11 12-14 ") String... results) {
+        
+            PlayerDTO p1 = repository.searchAndAddPlayer(player1);
+            PlayerDTO p2 = repository.searchAndAddPlayer(player2);
+            MatchDTO m = repository.findMatch(p1, p2);
+            if(m!=null) m = repository.editMatch(p1,p2, results);                
+            else m = repository.addMatch(p1,p2, results);
+            int[] result = m.getResult();
+            return "Match " + 
+                    p1.getSurname() + " - " + p2.getSurname() + ": " + 
+                    result[0] + "-" + result[1]+ " inserito.";        
+    }    
 }

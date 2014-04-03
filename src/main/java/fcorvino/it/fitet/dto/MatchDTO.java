@@ -25,6 +25,7 @@ import java.util.ArrayList;
  * @author Francesco Corvino <fcorvino86@gmail.com>
  */
 public class MatchDTO extends SimpleMatch {
+    private Integer id;
     
     public MatchDTO(PlayerDTO player1, PlayerDTO player2, ArrayList<String> results) {
         super(results.size());
@@ -67,4 +68,28 @@ public class MatchDTO extends SimpleMatch {
         String results = getResult()[0] + "-" + getResult()[1];
         return results;        
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MatchDTO){
+            return this.id.equals(((MatchDTO)obj).id);
+        }
+        return super.equals(obj); //To change body of generated methods, choose Tools | Templates.
+    }    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
+    
 }

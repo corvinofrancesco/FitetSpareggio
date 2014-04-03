@@ -20,10 +20,14 @@ import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellDependent;
 import asg.cliche.ShellFactory;
-import fcorvino.it.fitet.dto.MatchDTO;
+import com.thoughtworks.xstream.XStream;
 import fcorvino.it.fitet.dto.PlayerDTO;
 import fcorvino.it.fitet.output.VelocityPrinter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 import org.apache.velocity.Template;
 
 /**
@@ -64,24 +68,13 @@ public class FitetCliche implements ShellDependent {
         return "Menu home.";        
     }
 
-    @Command(description="Aggiunge un incontro al girone")
-    public String match(
-            @Param(name="player1", description="Codice del primo giocatore") String player1, 
-            @Param(name="player2", description="Codice del secondo giocatore") String player2, 
-            @Param(name="risultati", description="Elenco dei risultati, esempio: 1-11 3-11 12-14 ") String... results) {
-        
-            PlayerDTO p1 = repository.searchAndAddPlayer(player1);
-            PlayerDTO p2 = repository.searchAndAddPlayer(player2);
-            MatchDTO m = null;
-            try {
-                m = repository.editMatch(p1,p2, results);
-            } catch(Exception e){
-                return e.getMessage();
-            }
-            int[] result = m.getResult();
-            return "Match " + 
-                    p1.getSurname() + " - " + p2.getSurname() + ": " + 
-                    result[0] + "-" + result[1]+ " inserito.";        
+    @Command(name = "simulation", description = "Accede ai comandi per creare delle simulazioni.")
+    public String simulation() throws IOException{
+        System.out.println("Avviata modifica del girone, premere ?l per la lista dei comandi.");
+        ShellFactory.createSubshell(
+                "sim", shell, "Comandi di simulazione risultati.", 
+                new SimulationCommands(repository)).commandLoop();        
+        return "Menu home.";        
     }
     
     @Command(description="Registra un giocatore nel repository")
@@ -111,6 +104,45 @@ public class FitetCliche implements ShellDependent {
         return v.printToString(t);
     }
     
+    @Command(name="info", description="Restituisce le informazioni generali sullo stato del programma.")
+    public String info(){
+        VelocityPrinter v = VelocityPrinter.getPrinter();
+        Template t = v.loadTemplate("info.vm");
+        v.getContext().put("players", repository.getPlayers());
+        v.getContext().put("round", repository.getRound());
+        v.getContext().put("repository", repository);
+        return v.printToString(t);        
+    }
+    
+    @Command(name="save", description="Salva i dati in memoria.", abbrev = "s")
+    public String save(String fileName){
+        XStream xstream = new XStream();
+        try {
+            String serialObj = xstream.toXML(this.repository);            
+            FileWriter fw = new FileWriter(fileName);
+            fw.write(serialObj);
+            fw.close();        
+        } catch (IOException ex) {
+            return "Problemi durante il salvataggio";
+        }
+        return "scrittura con successo";
+    }
+    
+    @Command(name="load", description="Carica dei dati precedentemente salvati in memoria.", abbrev = "l")
+    public String load(String fileName){
+        XStream xstream = new XStream();
+        LocalRepository rep = null;
+        try {
+            String xml = new Scanner( new File(fileName), "UTF-8" ).useDelimiter("\\A").next();
+            rep = (LocalRepository)xstream.fromXML(xml);        
+        } catch (FileNotFoundException ex) { }
+        if(rep!=null) {
+            this.repository = rep;
+            return "Caricamento completato!";
+        }
+        return "Problemi durante il caricamento";
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -122,4 +154,6 @@ public class FitetCliche implements ShellDependent {
                 new FitetCliche())
                 .commandLoop();  
     }
+    
+
 }

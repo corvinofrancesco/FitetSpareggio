@@ -20,7 +20,9 @@ import fcorvino.it.fitet.dto.MatchDTO;
 import fcorvino.it.fitet.dto.PlayerDTO;
 import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimpleRound;
+import fcorvino.it.fitet.util.Common;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -93,23 +95,34 @@ public class LocalRepository {
         return p1;
     }
     
-    public MatchDTO findMatch(String player1, String player2){
-        PlayerDTO p1 = findPlayer(player1);
-        PlayerDTO p2 = findPlayer(player2);
-        int size_match = round.getNumMatches();
+    public MatchDTO findMatch(PlayerDTO p1, PlayerDTO p2){
+        int size_match = round.getMatches().size();
         for(int i =0;i<size_match;i++){
             SimpleMatch m = round.getMatch(i);
-            if(m.getFirstPlayer().equals(p1) || m.getSecondPlayer().equals(p1))
-                if(m.getFirstPlayer().equals(p2) || m.getSecondPlayer().equals(p2)) {
-                    MatchDTO mdto = new MatchDTO(m);
-                    return mdto;
-                }                            
+            if(m.containPlayer(p1) && m.containPlayer(p2)){
+                MatchDTO mdto = new MatchDTO(m);
+                return mdto;
+            }                            
         }
         return null;
     }
 
-    public MatchDTO editMatch(PlayerDTO p1, PlayerDTO p2, String[] results) {
-        
-        return null;
+    public MatchDTO editMatch(PlayerDTO p1, PlayerDTO p2, String[] results){
+        MatchDTO m = findMatch(p1, p2);
+        try {
+            Common.convertStringsToSets(results, m);
+        } catch(Exception e){
+            return null;            
+        }
+        return m;
+    }
+
+    public MatchDTO addMatch(PlayerDTO p1, PlayerDTO p2, String[] results) {
+        MatchDTO m = new MatchDTO(p1, p2,new ArrayList<String>(Arrays.asList(results)));
+        m.setId(round.getMatches().size());
+        if(!round.containPlayer(p1)) round.addPlayer(p1);
+        if(!round.containPlayer(p2)) round.addPlayer(p2);
+        round.getMatches().add(m);
+        return m;
     }
 }
