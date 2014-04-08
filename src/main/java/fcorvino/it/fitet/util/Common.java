@@ -17,7 +17,10 @@
 package fcorvino.it.fitet.util;
 
 import fcorvino.it.fitet.model.SimpleMatch;
+import fcorvino.it.fitet.model.SimplePlayer;
+import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.model.SimpleSet;
+import fcorvino.it.fitet.model.UniqueNamePlayer;
 
 /**
  * Common 
@@ -39,6 +42,14 @@ public class Common {
         }; 
         return pnt;
     }
+
+    public static SimpleMatch completeMatch(String[] sets, SimplePlayer[] pl) throws NumberFormatException, Exception {
+        SimpleMatch m = new SimpleMatch(sets.length);
+        m.setFirstPlayer(pl[0]);
+        m.setSecondPlayer(pl[1]);
+        convertStringsToSets(sets, m);
+        return m;
+    }    
     
     public static int convertStringsToSets(String results[], SimpleMatch m) throws Exception{
         int i = 0, countValid = 0;
@@ -64,4 +75,23 @@ public class Common {
         }
         return countValid;
     }
+    
+    /**
+     * Aggiunge due giocatori a un girone
+     * Attraverso due stringhe identificative di un giocatore, crea le istanze 
+     * attraverso la classe {@link UniqueNamePlayer} e controlla se nel girone siano
+     * stati già inseriti. Se sono già presenti non li inserisce.
+     * 
+     * @param parts stringhe rappresentati i due giocatori (dimensione pari a 2)
+     * @param r girone dove verranno inseriti i giocatori
+     * @return array dei giocatori creati.
+     */
+    public static SimplePlayer[] addPlayers(String[] parts, SimpleRound r) {
+        SimplePlayer pl1 = UniqueNamePlayer.getPlayer(parts[0]), 
+                pl2 = UniqueNamePlayer.getPlayer(parts[1]);
+        if(!r.containPlayer(pl1)) r.addPlayer(pl1);
+        if(!r.containPlayer(pl2)) r.addPlayer(pl2);
+        return new SimplePlayer[]{ pl1, pl2};
+    }
+    
 }
