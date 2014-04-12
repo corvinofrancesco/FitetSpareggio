@@ -16,10 +16,17 @@
 
 package fcorvino.it.fitet.input;
 
+import com.thoughtworks.xstream.XStream;
+import fcorvino.it.fitet.LocalRepository;
 import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.util.Common;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * InputFromTextFile 
@@ -47,5 +54,23 @@ public class InputFromTextFile {
         return r;
     }
     
+    public String loadFile(String fileName){
+        String xml = "";
+        try {
+            xml = new Scanner( new File(fileName), "UTF-8" ).useDelimiter("\\A").next();
+        } catch (FileNotFoundException ex) { }
+        return xml;
+    }
+    
+    public boolean saveFile(String fileName, Object obj){
+        XStream xstream = new XStream();
+        try {
+            String serialObj = xstream.toXML(obj);            
+            FileWriter fw = new FileWriter(fileName);
+            fw.write(serialObj);
+            fw.close();        
+        } catch (IOException ex) { return false;}
+        return true;
+    }
 
 }
