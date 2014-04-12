@@ -1,0 +1,13 @@
+## Riceve in input un OutputMatrix 
+#set($end=$matrix.size() - 1)
+Informazioni:
+Grandezza della matrice: $end
+
+--- Players | (id) :    #foreach($i in [0..$end])($i)    #end
+#foreach($i in [0..$end])
+    #set($name = $matrix.getPlayer($i).toString())
+    #if($name.length()>15)
+        #set($name=$name.substring(0,15))
+    #end
+    $name ($i):     #foreach($j in [0..$end]) $matrix.get(i,j).getResult() #end
+#end
