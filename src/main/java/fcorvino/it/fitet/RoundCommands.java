@@ -21,6 +21,7 @@ import asg.cliche.Param;
 import fcorvino.it.fitet.dto.MatchDTO;
 import fcorvino.it.fitet.dto.PlayerDTO;
 import fcorvino.it.fitet.dto.RoundDTO;
+import fcorvino.it.fitet.input.ShellProxy;
 import fcorvino.it.fitet.model.SimpleMatch;
 import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.output.OutputMatrix;
@@ -115,7 +116,15 @@ public class RoundCommands {
         return v.printToString(t);        
     }
     
+    @Command(name = "tableMatches",description = "Elenco dei match nel girone", abbrev = "tm")
+    public String tableMatches(){
+        VelocityPrinter v = VelocityPrinter.getPrinter();
+        Template t = v.loadTemplate("console/matrix-output.vm");
+        v.getContext().put("matrix", OutputMatrix.create(repository.getRound()));
+        return v.printToString(t);        
+    }
 
+    
     @Command(name = "match", description="Aggiunge un incontro al girone", abbrev = "m")
     public String match(
             @Param(name="player1", description="Codice del primo giocatore") String player1, 
@@ -128,8 +137,6 @@ public class RoundCommands {
             if(m!=null) m = repository.editMatch(p1,p2, results);                
             else m = repository.addMatch(p1,p2, results);
             int[] result = m.getResult();
-            return "Match " + 
-                    p1.getSurname() + " - " + p2.getSurname() + ": " + 
-                    result[0] + "-" + result[1]+ " inserito.";        
+            return ShellProxy.out("match.adding",p1.getSurname(),p2.getSurname(),result[0] ,result[1]);        
     }    
 }

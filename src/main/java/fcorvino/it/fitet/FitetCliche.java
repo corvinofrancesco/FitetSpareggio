@@ -46,18 +46,6 @@ public class FitetCliche implements ShellDependent {
     public void cliSetShell(Shell shell) {
         this.shell = shell;
     }
-
-    @Command(description="Varargs example")
-    public Integer add(
-            @Param(name="numbers", description="some numbers to add")
-            Integer... numbers) {
-
-        int result = 0;
-        for (int i : numbers) {
-            result += i;
-        }
-        return result;
-    }
     
     @Command(name = "round", description = "Avvia la modifica del girone")
     public String round() throws IOException{
@@ -74,6 +62,15 @@ public class FitetCliche implements ShellDependent {
         ShellFactory.createSubshell(
                 "sim", shell, "Comandi di simulazione risultati.", 
                 new SimulationCommands(repository)).commandLoop();        
+        return "Menu home.";        
+    }
+    
+    @Command(name = "system", description = "Accede ai comandi per configurare il sistema.")
+    public String system() throws IOException{
+        System.out.println("Comandi di gestione dell'applicazione, premere ?l per la lista dei comandi.");
+        ShellFactory.createSubshell(
+                "sys", shell, "Comandi di sistema.", 
+                new SystemCommands(repository)).commandLoop();        
         return "Menu home.";        
     }
     
