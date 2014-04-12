@@ -20,10 +20,14 @@ import fcorvino.it.fitet.model.SimplePlayer;
 import fcorvino.it.fitet.model.SimpleRound;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
- *
- * @author Francesco Corvino
+ * RoundRanking
+ * Specifica il posizionamento dei giocatori nella classifica fornendo alcuni metodi
+ * per definire le regole da applicare.
+ * 
+ * @author Francesco Corvino <fcorvino86@gmail.com>
  */
 public class RoundRanking {
     private SimpleRound round;
@@ -31,10 +35,17 @@ public class RoundRanking {
     private ArrayList<SimpleRank> ranks = null;
     private ArrayList<ArrayList<SimplePlayer>> groups = null;
     
+    
     public RoundRanking(SimpleRound round) {
         this.round = round;
     }
     
+    /**
+     * Inizializza la classifica. 
+     * Fase 1: Vengono aggiunti tutti i giocatori nella lista della classifica,
+     * la lista precedente viene eliminata, <b>non viene fatto nessun ordinamento</b>.
+     * 
+     */
     public void initRanks(){
         ranks = new ArrayList<SimpleRank>();
         for(int i = 0; i < round.getNumPlayers(); i++){
@@ -42,7 +53,39 @@ public class RoundRanking {
             ranks.add(r);
         }
     }
+    
+    /**
+     * Effettua l'ordinamento della classifica.
+     * Fase 2-4: consente di ordirare la classifica secondo delle regole
+     * specificate nel comparatore.
+     * Si veda le classi:
+     * <ul>
+     * <li>{@link RankingByDifferences}: compara dopo che sono state calcolate le differenze</li>
+     * <li>{@link RankingByPoint}: comparatore basilare che effettua la somma dei punti nel girone</li>
+     * </ul>
+     */
+    public void reorderRanks(Comparator<SimpleRank> c){
+        Collections.sort(ranks, c);        
+    }
+    
+    public void updatePositions(){
+        int i =1;
+        for(SimpleRank r : ranks){
+            r.setPosition(i);
+            i++;
+        }
+    }
 
+    /**
+     * Crea i raggruppamenti di giocatori.
+     * Fase 3: crea i raggruppamenti dei giocatori, deve esser stato effettuato 
+     * già l'ordinamento, altrimenti i gruppi non vengono creati correttamente.
+     * 
+     * Ogni gruppo viene creato confrontando i punteggi dei vari giocatori con il
+     * metodo {@link SimpleRank#getPoint() }.
+     * 
+     * @return numero di gruppi creati
+     */
     public int createGrouping(){
         if(ranks==null) initRanks();
         int currPoint = ranks.get(0).getPoint();
@@ -65,26 +108,41 @@ public class RoundRanking {
         }
         return groups.size();
     }
-    
-    public ArrayList<SimpleRank> getRanks() {
-        return ranks;
+       
+    /**
+     * Genera il ranking.
+     * Per generarlo esegue le fasi di default.
+     */
+    public void generateRanking(){
+        initRanks();
+        Collections.sort(ranks, new RankingByPoint());
+        // raggruppa i giocatori a pari punti 
+        createGrouping();
+        // calcola le differenze parziali
+        for(SimpleRank r : ranks){
+            r.calculateDifferences();
+        }
+        // effettua l'ordinamento sulle differenze
+        Collections.sort(ranks, new RankingByDifferences());         
+        updatePositions();
     }
-
+    
+    /**
+     * Restituisce il corrispondente {@link SimpleRank}.
+     * Per un giocatore {@link SimplePlayer} ricerca il rank dove è posizionato.
+     * 
+     * @param p oggetto identificativo del giocatore.
+     * @return {@link SimpleRank} oggetto che specifica il posizionamento nella classifica.
+     */
     private SimpleRank getPlayerRank(SimplePlayer p) {
         for(SimpleRank r : ranks){
             if(r.getPlayer().equals(p)) return r;
         }
         return null;
     }
-        
-    public void generateRanking(){
-        initRanks();
-        Collections.sort(ranks, new RankingByPoint());
-        createGrouping();
-        for(SimpleRank r : ranks){
-            r.calculateDifferences();
-        }
-        Collections.sort(ranks, new RankingByDifferences());        
+    
+    public ArrayList<SimpleRank> getRanks() {
+        return ranks;
     }
 
     public ArrayList<ArrayList<SimplePlayer>> getGroups() {
