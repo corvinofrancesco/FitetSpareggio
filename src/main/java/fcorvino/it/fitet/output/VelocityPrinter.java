@@ -16,6 +16,7 @@
 
 package fcorvino.it.fitet.output;
 
+import fcorvino.it.fitet.input.ShellProxy;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -45,7 +46,7 @@ public class VelocityPrinter {
             Velocity.init(prop);                     
         } catch(Exception e){}        
         context = new VelocityContext();
-        
+        context.put("message", ShellProxy.getInstance());
     }
 
         
