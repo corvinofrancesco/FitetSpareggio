@@ -81,7 +81,7 @@ public class OutputMatrix {
         return players.get(index);
     }
 
-    int size() {
+    public int size() {
         return players.size();
     }
     

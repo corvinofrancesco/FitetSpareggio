@@ -1,0 +1,81 @@
+<fcorvino.it.fitet.LocalRepository>
+  <players>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>A</surname>
+      <id>0</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>B</surname>
+      <id>1</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>C</surname>
+      <id>2</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>D</surname>
+      <id>3</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>E</surname>
+      <id>4</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+  </players>
+  <round>
+    <players>
+      <fcorvino.it.fitet.dto.PlayerDTO reference="../../../players/fcorvino.it.fitet.dto.PlayerDTO"/>
+      <fcorvino.it.fitet.dto.PlayerDTO reference="../../../players/fcorvino.it.fitet.dto.PlayerDTO[2]"/>
+      <fcorvino.it.fitet.dto.PlayerDTO reference="../../../players/fcorvino.it.fitet.dto.PlayerDTO[3]"/>
+    </players>
+    <matches>
+      <fcorvino.it.fitet.dto.MatchDTO>
+        <firstPlayer class="fcorvino.it.fitet.dto.PlayerDTO" reference="../../../../players/fcorvino.it.fitet.dto.PlayerDTO"/>
+        <secondPlayer class="fcorvino.it.fitet.dto.PlayerDTO" reference="../../../../players/fcorvino.it.fitet.dto.PlayerDTO[2]"/>
+        <sets>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>5</pntPlayer1>
+            <pntPlayer2>11</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>6</pntPlayer1>
+            <pntPlayer2>11</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>7</pntPlayer1>
+            <pntPlayer2>11</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+        </sets>
+        <id>0</id>
+      </fcorvino.it.fitet.dto.MatchDTO>
+      <fcorvino.it.fitet.dto.MatchDTO>
+        <firstPlayer class="fcorvino.it.fitet.dto.PlayerDTO" reference="../../../../players/fcorvino.it.fitet.dto.PlayerDTO"/>
+        <secondPlayer class="fcorvino.it.fitet.dto.PlayerDTO" reference="../../../../players/fcorvino.it.fitet.dto.PlayerDTO[3]"/>
+        <sets>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>3</pntPlayer1>
+            <pntPlayer2>11</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>9</pntPlayer1>
+            <pntPlayer2>11</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>11</pntPlayer1>
+            <pntPlayer2>9</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+          <fcorvino.it.fitet.model.SimpleSet>
+            <pntPlayer1>6</pntPlayer1>
+            <pntPlayer2>11</pntPlayer2>
+          </fcorvino.it.fitet.model.SimpleSet>
+        </sets>
+        <id>1</id>
+      </fcorvino.it.fitet.dto.MatchDTO>
+    </matches>
+  </round>
+  <properties/>
+</fcorvino.it.fitet.LocalRepository>

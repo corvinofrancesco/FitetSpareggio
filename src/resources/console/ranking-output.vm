@@ -1,0 +1,4 @@
+---- Classifica -------
+#foreach($r in $ranking.ranks)
+ * $r.point - $r.player | gruppo di $r.group.size() | differenze: $r.DifferenceSet - $r.DifferencePoint
+#end

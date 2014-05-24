@@ -49,6 +49,7 @@ public class SimplePrinter {
         }        
     }    
     
+    @Deprecated
     public void printTable(OutputMatrix matrix){
 
         int size = matrix.size();

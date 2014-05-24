@@ -1,0 +1,34 @@
+<fcorvino.it.fitet.LocalRepository>
+  <players>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>A</surname>
+      <id>0</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>B</surname>
+      <id>1</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>C</surname>
+      <id>2</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>D</surname>
+      <id>3</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+    <fcorvino.it.fitet.dto.PlayerDTO>
+      <name>Player</name>
+      <surname>E</surname>
+      <id>4</id>
+    </fcorvino.it.fitet.dto.PlayerDTO>
+  </players>
+  <round>
+    <players/>
+    <matches/>
+  </round>
+  <properties/>
+</fcorvino.it.fitet.LocalRepository>

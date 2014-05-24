@@ -27,6 +27,7 @@ import fcorvino.it.fitet.model.SimpleRound;
 import fcorvino.it.fitet.output.OutputMatrix;
 import fcorvino.it.fitet.output.VelocityPrinter;
 import fcorvino.it.fitet.roundutil.RoundRanking;
+import fcorvino.it.fitet.roundutil.SimpleRank;
 import fcorvino.it.fitet.util.Common;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -121,6 +122,19 @@ public class RoundCommands {
         VelocityPrinter v = VelocityPrinter.getPrinter();
         Template t = v.loadTemplate("console/matrix-output.vm");
         v.getContext().put("matrix", OutputMatrix.create(repository.getRound()));
+        return v.printToString(t);        
+    }
+
+    @Command(name = "ranking",description = "Classifica del girone", abbrev = "c")
+    public String tableRanking(){
+        VelocityPrinter v = VelocityPrinter.getPrinter();
+        Template t = v.loadTemplate("console/ranking-output.vm");
+        RoundRanking ranking = new RoundRanking(repository.getRound());
+        ranking.generateRanking();
+        for(SimpleRank r : ranking.getRanks()){
+            r.calculateDifferences();
+        }
+        v.getContext().put("ranking", ranking);
         return v.printToString(t);        
     }
 
